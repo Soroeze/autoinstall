@@ -1,0 +1,47 @@
+#cloud-config
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+  timezone: Europe/Stockholm
+  keyboard:
+    layout: se
+
+  identity:
+    hostname: ubuntu-lab
+    realname: Auto Lab
+    username: auto
+    password: "$6$J21gf1YL.QBuWN/9$dgjQRWpiTMmrDoPRyaWH7jY87W2d99TTzdcar5cVYDyS293s/skplbASZmsLjcCzvoQCDzEwcCRs5Nv54Ra/HC"
+
+  network:
+    version: 2
+    ethernets:
+      ens33:
+        addresses:
+          - 192.168.52.10/24
+        routes:
+          - to: default
+            via: 192.168.52.2
+        nameservers:
+          addresses:
+            - 8.8.8.8
+
+  storage:
+    layout:
+      name: lvm
+
+  ssh:
+    install-server: true
+    allow-pw: true
+
+  snaps:
+    - name: firefox
+      channel: latest/stable
+    - name: code
+      channel: latest/stable
+      classic: true
+    - name: docker
+      channel: latest/stable
+
+  updates: all
+  shutdown: poweroff
